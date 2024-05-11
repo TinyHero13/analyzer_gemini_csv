@@ -4,8 +4,6 @@ from contextlib import redirect_stdout
 from io import StringIO
 import pandas as pd
 
-load_dotenv()
-
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 
