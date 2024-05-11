@@ -43,7 +43,7 @@ Exemplos de prompt:
 
 - Calcule: qual a média/soma da coluna x
 
-- Calcule: monte um gráfico da coluna x por sua quantidade
+- Calcule: monte um gráfico de barras/rosca/linhas da coluna x por sua quantidade/pela coluna x
          ''')
 
 uploaded_file = st.file_uploader('Entre com o arquivo', type=["csv", "xlsx"])
@@ -94,6 +94,10 @@ if uploaded_file:
                                         fig = px.pie(df, values='pop', names='country')
                                         st.plotly_chart(fig)
                                         
+                                        - Gráfico de linhas
+                                        import plotly.express as px
+                                        fig = px.line(df, x="year", y="lifeExp", title='Life expectancy in Canada')
+                                        fig.show()
                                         
                                         Se perguntarem quais são as colunas responda com df.columns.to_list()
                                         
