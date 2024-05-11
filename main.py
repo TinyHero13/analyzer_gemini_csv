@@ -41,6 +41,8 @@ Exemplos de prompt:
 
 - Calcule: mostre as 5 primeiras linhas do csv
 
+- Calcule: quais são as colunas do csv?
+
 - Calcule: qual a média/soma da coluna x
 
 - Calcule: monte um gráfico de barras/rosca/linhas da coluna x por sua quantidade/pela coluna x
