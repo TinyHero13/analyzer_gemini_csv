@@ -42,22 +42,42 @@ if uploaded_file:
     for message in st.session_state.messages:
         st.chat_message(message['role']).markdown(message['content'])
 
-    question = st.chat_input("Digite sua mensagem...")
+    question = st.chat_input("Enter the message")
 
     if question:
         st.chat_message('user').markdown(question)
 
         st.session_state.messages.append({'role': 'user', 'content': question})
 
+
         response = model.generate_content(f"""
                                         Como analista de dados, você é encarregado de analisar conjuntos de dados em formato CSV e criar visualizações com base nas solicitações dos usuários. 
                                         Quando o usuário inserir 'Calcule:', você deve fornecer um código em Python para realizar operações no DataFrame, utilizando 'df' seguido do código específico para realizar a operação desejada, não precisa ler o csv, pois ele já está dentro da variavel df.
+                                        Utilize o st.write() para mostrar o código.
+                                        Por exemplo: st.write(df.shape[0]), st.write(df.head())
                                         
                                         Se o usuário perguntar quantas linhas tem no csv, escreva: 
                                         
                                         Se o usuário não inserir 'Calcule:', você deve simplesmente responder à consulta.
 
                                         Se você for solicitado a construir um gráfico, utilize a biblioteca Plotly e, em vez de exibir a figura diretamente com fig.show(), utilize st.plotly_chart(fig).
+                                        Onde que se pedirem pela quantidade você deverá fazer um value_counts da coluna específicada.
+                                        Exemplo:
+                                        value_counts = df['Item'].value_counts()
+                                        fig = px.bar(x=value_counts.index, y=value_counts.values
+                                        st.plotly_chart(fig)
+                                        
+                                        Outros exemplos:
+                                        - Gráfico de barras
+                                        import plotly.express as px
+                                        fig = px.bar(df, x='year', y='pop')
+                                        st.plotly_chart(fig)
+                                        
+                                        - Gráfico de rosca
+                                        import plotly.express as px
+                                        fig = px.pie(df, values='pop', names='country')
+                                        st.plotly_chart(fig)
+                                        
                                         
                                         Se perguntarem quais são as colunas responda com df.columns.to_list()
                                         
@@ -67,18 +87,19 @@ if uploaded_file:
                                         Aqui está dataframe (csv): {df}""").text
         if "```python" in response:
             response = response.strip("```python").strip("\n")
-
+            print(response)
+            
             with StringIO() as output_buffer:
                 with redirect_stdout(output_buffer):
                     exec(response)
                 captured_output = output_buffer.getvalue()
-
+                
             st.chat_message('Assistant').markdown(captured_output)
+
             if captured_output == '':
                 st.session_state.messages.append({'role': 'assistant', 'content': f'O código utilizado para sua montagem foi\n{response}'})
             else:
                 st.session_state.messages.append({'role': 'assistant', 'content': captured_output})
-
         else:
             captured_output = response
             st.chat_message('Assistant').markdown(captured_output)
