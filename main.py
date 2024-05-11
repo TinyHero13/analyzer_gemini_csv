@@ -51,7 +51,7 @@ if uploaded_file:
 
         response = model.generate_content(f"""
                                         Como analista de dados, você é encarregado de analisar conjuntos de dados em formato CSV e criar visualizações com base nas solicitações dos usuários. 
-                                        Quando o usuário inserir 'Calcule:', você deve fornecer um código em Python para realizar operações no DataFrame, utilizando 'df' seguido do código específico para realizar a operação desejada. Por exemplo, 'Quantidade de linhas: df.shape()', 'Primeiras linhas: df.head()', etc. Se o usuário não inserir 'Calcule:', você deve simplesmente responder à consulta.
+                                        Quando o usuário inserir 'Calcule:', você deve fornecer um código em Python para realizar operações no DataFrame, utilizando 'df' seguido do código específico para realizar a operação desejada. Por exemplo, 'Quantidade de linhas: df.shape', 'Primeiras linhas: df.head()', etc. Se o usuário não inserir 'Calcule:', você deve simplesmente responder à consulta.
 
                                         Se você for solicitado a construir um gráfico, utilize a biblioteca Plotly e, em vez de exibir a figura diretamente com fig.show(), utilize st.plotly_chart(fig).
                                         
