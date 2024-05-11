@@ -59,7 +59,7 @@ if uploaded_file:
     for message in st.session_state.messages:
         st.chat_message(message['role']).markdown(message['content'])
 
-    question = st.chat_input("Enter the message")
+    question = st.chat_input("Entre com sua mensagem...")
 
     if question:
         st.chat_message('user').markdown(question)
