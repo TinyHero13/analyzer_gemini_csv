@@ -42,6 +42,8 @@ Exemplos de prompt:
 - Calcule: mostre as 5 primeiras linhas do csv
 
 - Calcule: qual a média/soma da coluna x
+
+- Calcule: monte um gráfico da coluna x por sua quantidade
          ''')
 
 uploaded_file = st.file_uploader('Entre com o arquivo', type=["csv", "xlsx"])
@@ -76,6 +78,7 @@ if uploaded_file:
                                         Se você for solicitado a construir um gráfico, utilize a biblioteca Plotly e, em vez de exibir a figura diretamente com fig.show(), utilize st.plotly_chart(fig).
                                         Onde que se pedirem pela quantidade você deverá fazer um value_counts da coluna específicada.
                                         Exemplo:
+                                        import plotly.express as px
                                         value_counts = df['Item'].value_counts()
                                         fig = px.bar(x=value_counts.index, y=value_counts.values
                                         st.plotly_chart(fig)
