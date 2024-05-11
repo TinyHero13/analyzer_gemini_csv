@@ -29,7 +29,7 @@ Este é um assistente virtual projetado para auxiliar na análise de planilhas.
 
 Se deseja que ele execute cálculos, crie gráficos ou realize outras tarefas, insira "Calcule:" antes da sua instrução. 
 
-Ele suporta arquivos nos formatos .csv
+Ele suporta arquivos no formato .csv
 
 Para uma compreensão mais clara da linguagem Python, após enviar outra mensagem, o gráfico ou tabela será substituido pelo código em Python correspondente.
 
