@@ -23,7 +23,13 @@ model = genai.GenerativeModel(model_name='gemini-1.0-pro',
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-st.write('Analize planilhas')
+st.title('Assistente para analisar planilhas')
+st.write('''
+Este é um assistente virtual projetado para auxiliar na análise de planilhas. 
+Se deseja que ele execute cálculos, crie gráficos ou realize outras tarefas, insira "Calcule:" antes da sua instrução. 
+Ele suporta arquivos nos formatos .csv e .xlsx
+Para uma compreensão mais clara da linguagem Python, após enviar outra mensagem, o gráfico ou tabela será substituido pelo código em Python correspondente.
+         ''')
 
 uploaded_file = st.file_uploader('Entre com o arquivo', type=["csv", "xlsx"])
 
@@ -44,12 +50,16 @@ if uploaded_file:
         st.session_state.messages.append({'role': 'user', 'content': question})
 
         response = model.generate_content(f"""
-                                          Você é um analista de dados e precisa analisar csvs, montar gráficos, com relação da entrada do usuário.
-                                          Quando o usuário escrever, 'Python:' você deverá fornecer um código em Python, caso não tenha 'Python', apenas escreva a resposta.
-                                          O nome do dataframe é df, logo já pode escrever os códigos em cima do df.
-                                          Se falarem para construir um gráfico, utilize a biblioteca ploty, e em vez de utilizar fig.show(), utilize st.plotly_chart(fig).
-                                          Aqui está o prompt do usuário: {question}
-                                          Aqui está dataframe (csv): {df}""").text
+                                        Como analista de dados, sua tarefa é analisar CSVs e criar gráficos com base na entrada do usuário. Quando o usuário escrever 'Calcule:', você deverá fornecer um código em Python para realizar cálculos no DataFrame. Caso contrário, você deve simplesmente responder à consulta. O DataFrame é chamado de df, portanto, você pode escrever códigos com base nesse DataFrame.
+
+                                        Se você for solicitado a construir um gráfico, utilize a biblioteca Plotly e, em vez de exibir a figura diretamente com fig.show(), utilize st.plotly_chart(fig).
+                                        
+                                        Se perguntarem quais são as colunas responda com df.columns.to_list()
+                                        
+                                        Se pedirem para mostrar as linhas do df utilize st.write(df), no caso se for primeiras linhas, st.write(df.head()), se for as últimas linhas st.write(df.tail())
+                                        
+                                        Aqui está o prompt do usuário: {question}
+                                        Aqui está dataframe (csv): {df}""").text
 
         if "```python" in response:
             response = response.strip("```python").strip("\n")
@@ -60,8 +70,10 @@ if uploaded_file:
                 captured_output = output_buffer.getvalue()
 
             st.chat_message('Assistant').markdown(captured_output)
-
-            st.session_state.messages.append({'role': 'assistant', 'content': captured_output})
+            if captured_output == '':
+                st.session_state.messages.append({'role': 'assistant', 'content': f'O código utilizado para sua montagem foi\n{response}'})
+            else:
+                st.session_state.messages.append({'role': 'assistant', 'content': captured_output})
 
         else:
             captured_output = response
