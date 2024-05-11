@@ -26,9 +26,22 @@ model = genai.GenerativeModel(model_name='gemini-1.0-pro',
 st.title('Assistente para analisar planilhas')
 st.write('''
 Este é um assistente virtual projetado para auxiliar na análise de planilhas. 
+
 Se deseja que ele execute cálculos, crie gráficos ou realize outras tarefas, insira "Calcule:" antes da sua instrução. 
+
 Ele suporta arquivos nos formatos .csv e .xlsx
+
 Para uma compreensão mais clara da linguagem Python, após enviar outra mensagem, o gráfico ou tabela será substituido pelo código em Python correspondente.
+
+Exemplos de prompt:
+
+- Sobre o que é o csv?
+
+- Calcule: quantas linhas tem no csv?
+
+- Calcule: mostre as 5 primeiras linhas do csv
+
+- Calcule: qual a média/soma da coluna x
          ''')
 
 uploaded_file = st.file_uploader('Entre com o arquivo', type=["csv", "xlsx"])
