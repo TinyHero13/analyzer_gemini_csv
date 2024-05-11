@@ -42,7 +42,7 @@ if uploaded_file:
     for message in st.session_state.messages:
         st.chat_message(message['role']).markdown(message['content'])
 
-    question = st.chat_input("Enter the message")
+    question = st.chat_input("Digite sua mensagem...")
 
     if question:
         st.chat_message('user').markdown(question)
@@ -50,7 +50,8 @@ if uploaded_file:
         st.session_state.messages.append({'role': 'user', 'content': question})
 
         response = model.generate_content(f"""
-                                        Como analista de dados, sua tarefa é analisar CSVs e criar gráficos com base na entrada do usuário. Quando o usuário escrever 'Calcule:', você deverá fornecer um código em Python para realizar cálculos no DataFrame. Caso contrário, você deve simplesmente responder à consulta. O DataFrame é chamado de df, portanto, você pode escrever códigos com base nesse DataFrame.
+                                        Como analista de dados, você é encarregado de analisar conjuntos de dados em formato CSV e criar visualizações com base nas solicitações dos usuários. 
+                                        Quando o usuário inserir 'Calcule:', você deve fornecer um código em Python para realizar operações no DataFrame, utilizando 'df' seguido do código específico para realizar a operação desejada. Por exemplo, 'Quantidade de linhas: df.shape()', 'Primeiras linhas: df.head()', etc. Se o usuário não inserir 'Calcule:', você deve simplesmente responder à consulta.
 
                                         Se você for solicitado a construir um gráfico, utilize a biblioteca Plotly e, em vez de exibir a figura diretamente com fig.show(), utilize st.plotly_chart(fig).
                                         
